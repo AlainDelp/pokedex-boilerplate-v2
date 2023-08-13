@@ -1,8 +1,12 @@
-const { Sequelize } = require("sequelize");
+///require("dotenv").config();
+const Sequelize = require("sequelize");
 
-const sequelize = new Sequelize("pokedex", "postgres", "", {
-  host: "localhost",
-  dialect: "postgres",
-});
+///const db = new Sequelize("postgres://@localhost:5434/Pokedex");
+const db = new Sequelize({
+    dialect: 'postgres',
+    port: 5434, 
+    database: 'Pokedex',
+    password: 'Project4',
+  });
 
-module.exports = sequelize;
+module.exports = db;

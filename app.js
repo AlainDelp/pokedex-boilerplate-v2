@@ -3,11 +3,22 @@ const morgan = require("morgan");
 const pokeBank = require("./pokeBank");
 const pokeList = require("./views/pokeList");
 const pokeDetails = require("./views/pokeDetails");
+const db = require("./db")
 
 const app = express();
 
 app.use(morgan("dev"));
 app.use(express.static(__dirname + "/public"));
+
+(async () => {
+  try {
+    await db.sync({force:true});
+    console.log("Models synced with database");
+  } catch (error) {
+    console.error(error);
+  }
+})();
+
 
 app.get("/", (req, res) => {
   const pokemon = pokeBank.list();
@@ -18,13 +29,6 @@ app.get("/pokemon/:id", (req, res) => {
   const pokemon = pokeBank.find(req.params.id);
   res.send(pokeDetails(pokemon));
 });
-
-const PORT = 1500;
-
-app.listen(PORT, () => {
-  console.log(`App listening in port ${PORT}`);
-});
-
 const Pokemon = require("./models/Pokemon");
 
 app.get("/pokemon", async (req, res) => {
@@ -64,4 +68,10 @@ app.delete("/pokemon/:id", async (req, res) => {
   } else {
     res.status(404).send("Pokemon not found");
   }
+});
+
+const PORT = 2000;
+
+app.listen(PORT, () => {
+  console.log(`App listening in port ${PORT}`);
 });

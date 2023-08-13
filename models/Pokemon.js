@@ -16,11 +16,11 @@ const Pokemon = db.define("Pokemon", {
   },
   date: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
 });
 
